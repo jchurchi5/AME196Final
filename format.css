@@ -1,0 +1,86 @@
+body{
+  /*font-family: 'Arial Narrow';*/
+  font-family: 'Montserrat', sans-serif;
+  /*background-color: #f2726b;*/
+  background-image: url('./images/EQ.jpg');
+}
+
+h1, h4, p{
+  text-align: center;
+}
+
+h1{
+  font-size: 60px;
+}
+
+div#intro{
+  width: 60%;
+  margin: auto;
+  display: block;
+  padding: 0;
+}
+
+div#intro h4{
+  font-size: 2em;
+  font-weight: 500;
+  padding: 0;
+  width: 90%;
+  display: block;
+  color: white;
+  margin: auto;
+  margin-bottom: 0.5em;
+}
+
+div#intro p{
+  width: 80%;
+  font-weight: 200;
+  display: block;
+  margin: auto;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: white;
+}
+
+img{
+  display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+#wrap {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.half {
+  width: 50%;
+  margin-top: 100px;
+  float: left;
+}
+
+#vid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+ }
+
+#button1{
+  text-align: center;
+  margin-bottom: 1em;
+  border: 3px solid white;
+  width: 45%;
+  margin: auto;
+}
+
+a{
+  text-decoration: none;
+  font-weight: 600;
+  color: white;
+}
+
+#logo img{
+  width: 8%;
+}

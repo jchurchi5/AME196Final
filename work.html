@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- title to webpage and adding leap motion and css -->
+    <title>AME 196 - Final Project</title>
+    <script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+    <link rel="stylesheet" href="./format.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  </head>
+  <body class="learning-page">
+  
+  <!-- adding the p5.js from online which is needed to work art -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.20/p5.js"></script>
+  <!-- javascript created to use leap motion -->
+  <script>
+    //adding the audio files
+    var audio1 = new Audio('./audio/loop1.wav');
+    var audio2 = new Audio('./audio/loop2.wav');
+    var audio3 = new Audio('./audio/loop3.wav');
+    var audio4 = new Audio('./audio/loop4.wav');
+    var audio5 = new Audio('./audio/loop5.wav');
+
+    //adding leap motion controller
+    var controller = new Leap.Controller({enableGestures: true});
+    //getting it to be connected
+    controller.connect();
+    //array of empty colors
+    var colors = []
+    //making a canvas for the width and height
+    function setup() {
+      createCanvas(displayWidth, displayHeight);
+    }
+    //empty array for fingertips
+    var dots = [];
+    //drawing method for the fingers
+    function draw() {
+      //the size of the fingers
+      fill(0, 5);
+      //size of canvas
+      rect(0, 0, 1700, 710);
+      //not moving
+      noStroke();
+      //getting infromation in the frame
+      var frame = controller.frame();
+      //setting random colors
+      r = random(255);
+      g = random(255);
+      b = random(255);
+      //getting all fingers in the frame
+      frame.fingers.forEach(function(finger){
+        //getting the x and y to draw
+        x = finger.tipPosition[0]+width/2;
+        y = 710-finger.tipPosition[1];
+        //assigning volume on height
+        //window.alert(x);
+
+        audio1.volume = 1 - y/710;
+        audio2.volume = 1 - y/710;
+        audio3.volume = 1 - y/710;
+        audio4.volume = 1 - y/710;
+        audio5.volume = 1 - y/710;
+        //add fingertips to array 
+        dots.push({'x':x, 'y':y, 'r':r, 'g':g, 'b':b, 'size':random(15)});
+      });
+    
+      //get number of fingers and to empty variables
+      var num = frame.fingers.length;
+      var extenders = 0;
+      var i = 0;
+      //get the fingers extended
+      for (i = 0; i < num; i += 1) {
+          if (frame.fingers[i].extended === true) {
+              extenders += 1;
+          }
+      }
+      //if there are 2 hands then stop audio files
+      if(frame.hands.length == 2){
+          audio1.pause();
+          audio1.currentTime = 0;
+          audio2.pause();
+          audio2.currentTime = 0;
+          audio3.pause();
+          audio3.currentTime = 0;
+          audio4.pause();
+          audio4.currentTime = 0;
+          audio5.pause();
+          audio5.currentTime = 0;
+      }
+      //check to make sure nothing is playing then depending on finger count play a different sound
+      if(audio1.paused && audio2.paused && audio3.paused && audio4.paused && audio5.paused){
+        if(extenders == 1){
+          audio1.play();
+        }
+        else if(extenders == 2){
+          audio2.play();
+        }
+        else if(extenders == 3){
+          audio3.play();
+        }
+        else if(extenders == 4){
+          audio4.play();
+        }
+        else if(extenders == 5){
+          audio5.play();
+        }
+      }
+      //draw move and delete
+      drawDots();
+      moveDots();
+      deleteDots();
+    }
+    //function that actually does the drawing
+    function drawDots(){
+      dots.forEach(function(dot){
+        fill(dot['r'], dot['g'], dot['b']);
+        ellipse(dot['x'], dot['y'], dot['size'], dot['size']);
+      });
+    }
+    //makes the dots move down 
+    function moveDots(){
+      dots.forEach(function(dot){
+        dot['y']+=1;
+      });
+    }
+    //eventually removes dots
+    function deleteDots(){
+      for(i = 0; i < dots.length; i++){
+        if(dots[i]['y']>height) {
+          dots.splice(i, 1);
+        }
+      }
+    }
+  </script>
+
+  </body>
+</html>
